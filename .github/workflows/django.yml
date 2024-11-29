@@ -12,8 +12,8 @@ jobs:
     - name: Run Tests
       run: |
         echo "hello world"
-        echo "${{ secrets.EC2_PRIVATE_SECRET }}" > my-secret.pem
-        chmod 400 my-secret.pem
-        ssh -o StrictHostKeyChecking=no -i my-secret.pem ubuntu@ec2-3-37-128-58.ap-northeast-2.compute.amazonaws.com '
+        echo "${{ secrets.EC2_PRIVATE_SECRET }}" > my-key.pem
+        chmod 400 my-key.pem
+        ssh -o StrictHostKeyChecking=no -i my-key.pem ubuntu@ec2-3-37-128-58.ap-northeast-2.compute.amazonaws.com '
           date > current_time.txt
         '
