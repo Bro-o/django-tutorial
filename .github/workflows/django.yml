@@ -7,9 +7,13 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v4
     - name: Run Tests
       run: |
-        python manage.py mysite
+        echo "hello world"
+        echo "${{ secrets.EC2_PRIVATE_SECRET }}" > ec2-private-key.pem
+        chmod 400 ec2-private-key.pem
+        ssh -o StrictHostKeyChecking=no -i ec2-private-key.pem ubuntu@ec2-3-37-128-58.ap-northeast-2.compute.amazonaws.com '
+          date > current_time.txt
+        '
