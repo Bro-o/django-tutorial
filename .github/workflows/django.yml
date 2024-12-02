@@ -8,7 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      EC2_CONNECTION_STRING: ec2-3-37-128-58.ap-northeast-2.compute.amazonaws.com
+      EC2_CONNECTION_STRING: ec2-54-180-134-129.ap-northeast-2.compute.amazonaws.com
     steps:
     - name: Clone Repository
       uses: actions/checkout@v4
