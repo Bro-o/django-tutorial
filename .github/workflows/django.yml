@@ -17,4 +17,4 @@ jobs:
         echo "hello world"
         echo "${{ secrets.EC2_PRIVATE_SECRET }}" > my-key.pem
         chmod 400 my-key.pem
-        ssh -o StrictHostKeyChecking=no -i my-key.pem ${{ env.EC2_CONNECTION_STRING }} "bash -s" < runserver.sh
+        ssh -o StrictHostKeyChecking=no -i my-key.pem ubuntu@${{ env.EC2_CONNECTION_STRING }} "bash -s" < runserver.sh
