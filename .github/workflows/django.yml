@@ -7,14 +7,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      EC2_CONNECTION_STRING: ec2-3-37-128-58.ap-northeast-2.compute.amazonaws.com
     steps:
-    - uses: actions/checkout@v4
-    - name: Run Tests
+    - name: Clone Repository
+      uses: actions/checkout@v4
+    - name: Run Server
       run: |
         echo "hello world"
         echo "${{ secrets.EC2_PRIVATE_SECRET }}" > my-key.pem
         chmod 400 my-key.pem
-        echo my-key.pem
-        ssh -o StrictHostKeyChecking=no -i my-key.pem ubuntu@ec2-3-37-128-58.ap-northeast-2.compute.amazonaws.com '
-          date > current_time.txt
-        '
+        ssh -o StrictHostKeyChecking=no -i my-key.pem ${{ env.EC2_CONNECTION_STRING }} "bash -s" < runserver.sh
