@@ -1,4 +1,4 @@
-name: Django CI
+name: Django Polls CI/CD
 
 on:
   push:
@@ -25,3 +25,17 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      EC2_CONNECTION_STRING: ec2-54-180-134-129.ap-northeast-2.compute.amazonaws.com
+    steps:
+    - name: Clone Repository
+      uses: actions/checkout@v4
+    - name: Run Server
+      run: |
+        echo "hello world"
+        echo "${{ secrets.EC2_PRIVATE_SECRET }}" > my-key.pem
+        chmod 400 my-key.pem
+        ssh -o StrictHostKeyChecking=no -i my-key.pem ubuntu@${{ env.EC2_CONNECTION_STRING }} "bash -s" < runserver.sh
